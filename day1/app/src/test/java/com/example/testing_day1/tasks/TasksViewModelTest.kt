@@ -3,7 +3,9 @@ package com.example.testing_day1.tasks
 import android.app.Application
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.testing_day1.data.source.DefaultTasksRepository
 import getOrAwaitValue
+import io.mockk.mockk
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
@@ -17,11 +19,13 @@ import org.junit.runner.RunWith
 class TasksViewModelTest {
 
     lateinit var tasksViewModel : TasksViewModel
+    private lateinit var repository: DefaultTasksRepository
+
 
     @Before
     fun setup(){
-        val context = ApplicationProvider.getApplicationContext() as Application
-        tasksViewModel = TasksViewModel(context)
+        repository =mockk(relaxed = true)
+        tasksViewModel = TasksViewModel(repository)
     }
 
     @Test
